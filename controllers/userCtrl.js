@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Agents = require("../models/agentModel");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../config/jwtToken");
 const validateMongoDbId = require("../utils/validateMongodbId");
@@ -7,6 +8,7 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const { sendEmail } = require("./emailCtrl");
 const { validationResult } = require("express-validator"); // Import validation functions if needed
+const { Agent } = require("http");
 
 // Create a new user
 const createUser = asyncHandler(async (req, res) => {
@@ -110,25 +112,22 @@ const updatedUser = asyncHandler(async (req, res) => {
 // Get all users
 const getallUser = asyncHandler(async (req, res) => {
   try {
-    const getUsers = await User.find();
+    const getUsers = await User.find().sort({ distance: 1 });
     res.json(getUsers);
   } catch (error) {
-    res.status(500).json({ error: "Error getting users" });
+    throw new Error(error);
   }
 });
 
 // Get a single user by ID
 const getaUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
-
   try {
     validateMongoDbId(id); // Validate the MongoDB ID
-
     const getaUser = await User.findById(id);
     if (!getaUser) {
       return res.status(404).json({ error: "User not found" });
     }
-
     res.json(getaUser);
   } catch (error) {
     console.error("Error getting user:", error);

@@ -11,10 +11,14 @@ var userSchema = new mongoose.Schema(
     agencyId: {
       type: String,
       required: true,
+      unique: true,
     },
     type: {
       type: String,
       required: true,
+    },
+    distance: {
+      type: Number,
     },
     email: {
       type: String,
@@ -61,6 +65,12 @@ var userSchema = new mongoose.Schema(
       },
       coordinates: [Number], // [longitude, latitude]
     },
+    agents: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "agentModel",
+      },
+    ],
     services: [
       {
         type: mongoose.Schema.Types.ObjectId,

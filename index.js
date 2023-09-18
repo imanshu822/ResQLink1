@@ -4,7 +4,9 @@ const app = express();
 const dotenv = require("dotenv").config();
 
 const authRouter = require("./routes/authRoute");
+const agentRoute = require("./routes/agentRoute");
 const incidentRoute = require("./routes/incidentRoute");
+const resourceRouter = require("./routes/resourceRoute");
 
 const bodyParser = require("body-parser");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
@@ -24,6 +26,8 @@ app.use(cookieParser());
 // Routes
 app.use("/api/user", authRouter);
 app.use("/api/incident", incidentRoute);
+app.use("/api/agents", agentRoute);
+app.use("/api/resource", resourceRouter);
 
 // 404 Not Found Middleware
 app.use(notFound);

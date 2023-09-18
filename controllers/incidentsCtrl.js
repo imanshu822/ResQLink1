@@ -37,15 +37,9 @@ const getAnIncident = asyncHandler(async (req, res) => {
 const getAllIncidents = asyncHandler(async (req, res) => {
   try {
     const allIncidents = await Incident.find();
-
-    if (!allIncidents) {
-      return res.status(404).json({ error: "No incidents found" });
-    }
-
-    res.json(allIncidents);
+    res.json(getUsers);
   } catch (error) {
-    console.error("Error retrieving incidents:", error);
-    res.status(500).json({ error: "Error retrieving incidents" });
+    throw new Error(error);
   }
 });
 

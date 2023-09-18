@@ -15,6 +15,7 @@ const {
 } = require("../controllers/userCtrl");
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
 const { validationResult } = require("express-validator"); // Import validation functions if needed
+const { sendEmail } = require("../controllers/emailCtrl");
 const router = express.Router();
 
 // User Registration
@@ -36,7 +37,7 @@ router.post("/login", loginUserCtrl);
 router.get("/refresh", handleRefreshToken);
 
 // Get All Users (Admin only)
-router.get("/all-users", authMiddleware, isAdmin, getallUser);
+router.get("/all-users", authMiddleware, getallUser);
 
 // Get a User by ID
 router.get("/:id", authMiddleware, getaUser);
@@ -52,5 +53,8 @@ router.put("/block-User/:id", authMiddleware, isAdmin, blockUser);
 
 // Unblock User (Admin only)
 router.put("/unblock-User/:id", authMiddleware, isAdmin, unblockUser);
+
+// Send UserId and Password to agent
+router.post("/sendMail/:id", sendEmail);
 
 module.exports = router;

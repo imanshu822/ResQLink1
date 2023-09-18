@@ -16,9 +16,9 @@ router.post("/add-incident", authMiddleware, addIncident);
 router.get("/:id", getAnIncident);
 
 // Get All Incidents (Authenticated)
-router.get("/get-all-incidents", authMiddleware, getAllIncidents);
+router.get("/get-all-incidents", getAllIncidents);
 
 // Update an Incident by ID
-router.put("/:id", authMiddleware, updateIncident);
+router.put("/update-a-incident/:id", authMiddleware, updateIncident);
 
 module.exports = router;
